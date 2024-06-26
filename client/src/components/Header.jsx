@@ -34,7 +34,7 @@ const Header = () => {
             </Link>
 
             <Link to='/signin'>
-              <li>Sign</li>
+              <li>Sign In</li>
             </Link>
           </ul>
         </nav>
