@@ -1,0 +1,26 @@
+{
+  "name": "real-estate-marketplace-mern-app",
+  "version": "1.0.0",
+  "description": "tech used : tailwind css react icon",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radhi-Hudijan/Real-Estate-Marketplace-MERN-APP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Radhi-Hudijan/Real-Estate-Marketplace-MERN-APP/issues"
+  },
+  "homepage": "https://github.com/Radhi-Hudijan/Real-Estate-Marketplace-MERN-APP#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
+  }
+}
