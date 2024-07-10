@@ -1,12 +1,9 @@
-import { time } from "console"
-import { Timestamp } from "mongodb"
 import mongoose from "mongoose"
-import { type } from "os"
 const { Schema } = mongoose
 
 const userSchema = new Schema(
   {
-    name: {
+    userName: {
       type: String,
       required: true,
       unique: true,

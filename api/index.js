@@ -2,12 +2,16 @@ import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import userRouter from "./routes/user.route.js"
+import authRouter from "./routes/auth.route.js"
 
 //Load env variables
 dotenv.config()
 
 //Create an express app
 const app = express()
+
+//Middleware
+app.use(express.json())
 
 //connect to MongoDB
 const connect = async () => {
@@ -25,6 +29,7 @@ mongoose.connection.on("disconnected", () => {
 
 //Routes
 app.use("/api/user", userRouter)
+app.use("/api/auth", authRouter)
 
 //connect to server
 app.listen(process.env.PORT, () => {
