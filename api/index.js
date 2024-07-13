@@ -31,6 +31,17 @@ mongoose.connection.on("disconnected", () => {
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter)
 
+//error handling middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500
+  const errorMessage = err.message || "Internal Server Error"
+  return res.status(statusCode).json({
+    success: false,
+    status: statusCode,
+    message: errorMessage,
+  })
+})
+
 //connect to server
 app.listen(process.env.PORT, () => {
   connect()
