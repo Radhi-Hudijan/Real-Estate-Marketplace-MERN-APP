@@ -26,11 +26,11 @@ export const singin = async (req, res, next) => {
   try {
     const validUser = await User.findOne({ email })
     if (!validUser) {
-      return next(createError(404, "User not found"))
+      return next(createError(404, "Email or password are not correct"))
     }
     const validPassword = bcryptjs.compareSync(password, validUser.password)
     if (!validPassword) {
-      return next(createError(401, "Wrong credentials"))
+      return next(createError(401, "Email or password are not correct"))
     }
 
     //generate token and send it to the client
