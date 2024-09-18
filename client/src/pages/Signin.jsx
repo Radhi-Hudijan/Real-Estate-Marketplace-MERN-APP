@@ -1,11 +1,19 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice"
 
 function Signin() {
   const [formData, setFormData] = useState({}) // store user input
-  const [error, setError] = useState(null) // store error message
-  const [loading, setLoading] = useState(false) // store loading state
+  const { error, loading } = useSelector((state) => state.user) // get error and loading state from redux
   const navigate = useNavigate()
+
+  const dispatch = useDispatch() // get dispatch function from redux
+
   // handle user input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value }) // update formData
@@ -15,7 +23,7 @@ function Signin() {
   const onSubmit = async (e) => {
     e.preventDefault() // prevent page refresh
     try {
-      setLoading(true) // set loading state
+      dispatch(signInStart()) // set loading state
 
       // send POST request to server
       const response = await fetch("/api/auth/signin", {
@@ -30,17 +38,13 @@ function Signin() {
 
       // handle response
       if (data.success === false) {
-        setLoading(false) // set loading state
-        setError(data.message) // set error message
+        dispatch(signInFailure(data.message)) // set error message
         return
       }
-      setLoading(false) // set loading
-      setError(null) // clear error message
-      alert("Logged in  successfully") // show success message
+      dispatch(signInSuccess(data)) // set user in redux store
       navigate("/") // redirect to login page
     } catch (error) {
-      setLoading(false) // set loading state
-      setError(error.message) // set error message
+      dispatch(signInFailure(error.message)) // set error message
     }
   }
 
