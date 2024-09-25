@@ -12,3 +12,4 @@ Tech used for frontend:
 - Redux toolkit for global state managment
 - Redux persist to store the data .
 - using Google OAuth
+- FireBase authentication
