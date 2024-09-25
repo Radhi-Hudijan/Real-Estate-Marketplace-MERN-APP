@@ -49,3 +49,47 @@ export const singin = async (req, res, next) => {
     next(error)
   }
 }
+
+export const googleOAuth = async (req, res, next) => {
+  try {
+    const { name, email, photo_URL } = req.body
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      //if user does not exist, create a new user
+      const generatedPassword = Math.random().toString(36).slice(-8) //generate random password
+
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10) //hash password
+
+      const newUser = new User({
+        userName:
+          name.split(" ").join("").toLowerCase() +
+          Math.random().toString(36).slice(-4), // make username unique and add random string
+        password: hashedPassword,
+        email,
+        avatar: photo_URL,
+      })
+      await newUser.save()
+
+      const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET) //generate token
+      const { password: pass, ...rest } = newUser._doc
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ user: rest })
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
+    const { password: hashedPassword, ...userWithoutPassword } = user._doc
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ user: userWithoutPassword })
+  } catch (error) {
+    next(error)
+  }
+}

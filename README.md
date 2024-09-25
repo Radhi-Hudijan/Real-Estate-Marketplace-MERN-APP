@@ -11,3 +11,4 @@ Tech used for frontend:
 - react icon
 - Redux toolkit for global state managment
 - Redux persist to store the data .
+- using Google OAuth

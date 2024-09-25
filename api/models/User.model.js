@@ -17,6 +17,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      default: "https://pngtree.com/so/profile-icon",
+    },
   },
   { timestamps: true }
 )

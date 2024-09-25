@@ -6,6 +6,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice"
+import OAuth from "../components/OAuth"
 
 function Signin() {
   const [formData, setFormData] = useState({}) // store user input
@@ -75,6 +76,7 @@ function Signin() {
         >
           {loading ? "LOADING..." : "Sign In"}
         </button>
+        <OAuth />
       </form>
       {error && <p className="text-red-500 text-center mt-3">{error}</p>}
 
