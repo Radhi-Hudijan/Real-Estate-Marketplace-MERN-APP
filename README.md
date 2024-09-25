@@ -10,3 +10,4 @@ Tech used for frontend:
 - tailwind css
 - react icon
 - Redux toolkit for global state managment
+- Redux persist to store the data .
