@@ -19,7 +19,7 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: "https://pngtree.com/so/profile-icon",
+      default: "https://i.postimg.cc/zDHHXfd8/no-profile-picture-15257.png",
     },
   },
   { timestamps: true }
