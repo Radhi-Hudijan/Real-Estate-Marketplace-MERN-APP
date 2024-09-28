@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
+import cookieParser from "cookie-parser"
 
 //Load env variables
 dotenv.config()
@@ -12,6 +13,9 @@ const app = express()
 
 //Middleware
 app.use(express.json())
+
+//cookie parser to parse cookies from the incoming request headers
+app.use(cookieParser())
 
 //connect to MongoDB
 const connect = async () => {

@@ -4,6 +4,7 @@ Tech used for backend:
 
 - bcrypt.js: to hash passwords
 - JWT for user signin to generate token
+- cookie-parser
 
 Tech used for frontend:
 
