@@ -41,7 +41,7 @@ const Header = () => {
             <Link to="/profile">
               {currentUser ? (
                 <img
-                  src={currentUser.user.avatar}
+                  src={currentUser.avatar}
                   alt="avatar"
                   className="w-8 h-8 rounded-full object-cover"
                 />

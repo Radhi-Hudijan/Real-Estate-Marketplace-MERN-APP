@@ -44,7 +44,7 @@ export const singin = async (req, res, next) => {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
       })
       .status(200)
-      .json({ user: userWithoutPassword })
+      .json(userWithoutPassword)
   } catch (error) {
     next(error)
   }
@@ -78,7 +78,7 @@ export const googleOAuth = async (req, res, next) => {
           httpOnly: true,
         })
         .status(200)
-        .json({ user: rest })
+        .json(rest)
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
@@ -88,7 +88,7 @@ export const googleOAuth = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ user: userWithoutPassword })
+      .json(userWithoutPassword)
   } catch (error) {
     next(error)
   }
