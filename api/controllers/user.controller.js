@@ -10,8 +10,6 @@ export const getUser = (req, res) => {
 //update user
 export const updateUser = async (req, res, next) => {
   //verify user is updating their own account
-  console.log(req.user.userId)
-  console.log(req.params.id)
   if (req.user.userId !== req.params.id) {
     return next(createError(403, "You can only update your account"))
   }
@@ -45,4 +43,20 @@ export const updateUser = async (req, res, next) => {
   }
 
   return next()
+}
+
+// delete user
+export const deleteUser = async (req, res, next) => {
+  //verify user is updating their own account
+  if (req.user.userId !== req.params.id) {
+    return next(createError(403, "You can only delete your account"))
+  }
+
+  try {
+    await User.findByIdAndDelete(req.params.id)
+    res.clearCookie("access_token")
+    res.status(200).json("User has been deleted")
+  } catch (error) {
+    next(error)
+  }
 }
