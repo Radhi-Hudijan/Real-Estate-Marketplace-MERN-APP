@@ -93,3 +93,13 @@ export const googleOAuth = async (req, res, next) => {
     next(error)
   }
 }
+
+// signout
+export const signout = (req, res) => {
+  try {
+    res.clearCookie("access_token") //clear cookie
+    res.status(200).json({ message: "Signout successfully" })
+  } catch (error) {
+    next(error)
+  }
+}
