@@ -19,6 +19,8 @@ import {
   signOutStart,
 } from "../redux/user/userSlice"
 
+import { Link } from "react-router-dom"
+
 const Profile = () => {
   const { currentUser, loading, error } = useSelector((state) => state.user) // get the current user from the store
   const fileRef = useRef(null) // create a reference to the file input element
@@ -197,6 +199,13 @@ const Profile = () => {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+
+        <Link
+          to={"/create-listing"}
+          className="bg-green-600 text-white text-center p-3 uppercase rounded-lg hover:opacity-90 disabled:opacity-80"
+        >
+          Create Listing
+        </Link>
       </form>
 
       <div className="flex justify-between mt-4 ">
