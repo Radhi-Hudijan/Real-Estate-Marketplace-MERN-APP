@@ -3,6 +3,7 @@ import {
   deleteUser,
   getUser,
   updateUser,
+  getUserListing,
 } from "../controllers/user.controller.js"
 import { verifyUser } from "../utils/verifyUser.js"
 
@@ -12,5 +13,6 @@ router.get("/", getUser)
 
 router.post("/update/:id", verifyUser, updateUser)
 router.delete("/delete/:id", verifyUser, deleteUser)
+router.get("/listings/:id", verifyUser, getUserListing)
 
 export default router
