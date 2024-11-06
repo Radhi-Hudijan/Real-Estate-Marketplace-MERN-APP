@@ -30,7 +30,11 @@ const Profile = () => {
   const [formData, setFormData] = useState({}) // create a state to store the form data
   const [updateSuccess, setUpdateSuccess] = useState(false) // create a state to store the update success message
   const dispatch = useDispatch() // get the dispatch function from redux
+  const [listings, setListings] = useState([])
+  const [showListing, setShowListing] = useState(false)
+  const [showListingError, setShowListingError] = useState(false)
 
+  console.log(listings)
   // update the form data when the current user changes
   useEffect(() => {
     if (file) {
@@ -133,6 +137,23 @@ const Profile = () => {
     }
   }
 
+  // handle show listing
+  const handleShowListing = async () => {
+    setShowListing(!showListing)
+    try {
+      setShowListingError(false)
+      const response = await fetch(`/api/user/listings/${currentUser._id}`)
+      const data = await response.json()
+      if (data.success === false) {
+        setShowListingError(true)
+        return
+      }
+      setListings(data)
+    } catch (error) {
+      setShowListingError(true)
+    }
+  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold my-7 text-center">Profile</h1>
@@ -207,7 +228,6 @@ const Profile = () => {
           Create Listing
         </Link>
       </form>
-
       <div className="flex justify-between mt-4 ">
         <span
           className="text-slate-700 cursor-pointer"
@@ -227,6 +247,56 @@ const Profile = () => {
         <p className="text-green-500 text-center mt-3">
           Profile successfully updated
         </p>
+      )}
+      <button
+        onClick={handleShowListing}
+        className="text-green-600 w-full mt-3"
+      >
+        Show Your Listings
+      </button>
+
+      {showListingError && listings > 0 && (
+        <p className="text-red-500 text-center mt-3">Error fetching listings</p>
+      )}
+
+      {showListing && (
+        <div>
+          <h1 className="text-3xl font-semibold my-7 text-center">
+            Your Listings
+          </h1>
+          <div className="mt-3">
+            {listings.map((listing) => (
+              <div
+                key={listing._id}
+                className="border p-3 rounded-lg mt-2 flex justify-between items-center"
+              >
+                <Link to={`/listing/${listing._id}`}>
+                  <img
+                    src={listing.imageUrls[0]}
+                    alt={listing.name}
+                    className="w-16 h-16 object-contain"
+                  />
+                </Link>
+                <Link to={`/listing/${listing._id}`}>
+                  <div className="flex flex-col flex-1">
+                    <span className="text-lg text-slate-700 font-semibold hover:underline truncate">
+                      {listing.name}
+                    </span>
+                    <span className="text-sm">{listing.description}</span>
+                  </div>
+                </Link>
+                <div className="flex flex-col ">
+                  <button className="text-red-500 text-center uppercase hover:underline">
+                    Delete
+                  </button>
+                  <button className="text-green-500 text-center uppercase hover:underline">
+                    Edit
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   )
