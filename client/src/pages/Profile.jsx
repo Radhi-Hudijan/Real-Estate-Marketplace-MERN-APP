@@ -34,7 +34,6 @@ const Profile = () => {
   const [showListing, setShowListing] = useState(false)
   const [showListingError, setShowListingError] = useState(false)
 
-  console.log(listings)
   // update the form data when the current user changes
   useEffect(() => {
     if (file) {
@@ -151,6 +150,23 @@ const Profile = () => {
       setListings(data)
     } catch (error) {
       setShowListingError(true)
+    }
+  }
+
+  // handle delete listing
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const response = await fetch(`/api/listing/delete/${listingId}`, {
+        method: "DELETE",
+      })
+      const data = await response.json()
+      if (data.success === false) {
+        console.log(data.message)
+        return
+      }
+      setListings(listings.filter((listing) => listing._id !== listingId))
+    } catch (error) {
+      console.log(error.message)
     }
   }
 
@@ -286,7 +302,10 @@ const Profile = () => {
                   </div>
                 </Link>
                 <div className="flex flex-col ">
-                  <button className="text-red-500 text-center uppercase hover:underline">
+                  <button
+                    onClick={() => handleDeleteListing(listing._id)}
+                    className="text-red-500 text-center uppercase hover:underline"
+                  >
                     Delete
                   </button>
                   <button className="text-green-500 text-center uppercase hover:underline">
