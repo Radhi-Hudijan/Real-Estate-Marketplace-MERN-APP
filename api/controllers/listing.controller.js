@@ -9,6 +9,7 @@ export const createListing = async (req, res, next) => {
   }
 }
 
+// deleteListing function
 export const deleteListing = async (req, res, next) => {
   // check if listing exists
   const listing = await Listing.findById(req.params.id)
@@ -28,5 +29,35 @@ export const deleteListing = async (req, res, next) => {
     return res.status(200).json({ message: "Listing deleted" })
   } catch (error) {
     next(error)
+  }
+}
+
+// updateListing function
+export const updateListing = async (req, res, next) => {
+  // check if the user is authorized to update the listing
+  const listing = await Listing.findById(req.params.id)
+
+  // check if listing exists
+  if (!listing) {
+    return next(createError(404, "Listing not found"))
+  }
+
+  if (listing.userRef !== req.user.userId) {
+    return next(
+      createError(401, "You are not authorized to update this listing")
+    )
+  }
+
+  try {
+    const updatedListing = await Listing.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    )
+    return res.status(200).json(updatedListing)
+  } catch (error) {
+    next(createError(400, error.message))
   }
 }
