@@ -61,3 +61,13 @@ export const updateListing = async (req, res, next) => {
     next(createError(400, error.message))
   }
 }
+
+// getListing function
+export const getListing = async (req, res, next) => {
+  try {
+    const listing = await Listing.findById(req.params.listingId)
+    return res.status(200).json(listing)
+  } catch (error) {
+    next(createError(404, "Listing not found"))
+  }
+}
