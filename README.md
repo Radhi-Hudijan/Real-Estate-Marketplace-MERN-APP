@@ -14,3 +14,4 @@ Tech used for frontend:
 - Redux persist to store the data .
 - using Google OAuth
 - FireBase authentication
+- Swiper library for sliders
