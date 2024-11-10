@@ -70,7 +70,10 @@ export const getUserListing = async (req, res, next) => {
   }
 
   try {
-    const listing = await Listing.find({ userRef: req.params.id })
+    //get all listings created by the user and sort by newest
+    const listing = await Listing.find({ userRef: req.params.id }).sort({
+      createdAt: -1,
+    })
     res.status(200).json(listing)
   } catch (error) {
     next(error)
