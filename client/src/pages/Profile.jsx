@@ -298,7 +298,6 @@ const Profile = () => {
                     <span className="text-lg text-slate-700 font-semibold hover:underline truncate">
                       {listing.name}
                     </span>
-                    <span className="text-sm">{listing.description}</span>
                   </div>
                 </Link>
                 <div className="flex flex-col ">

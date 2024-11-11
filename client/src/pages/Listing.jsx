@@ -8,7 +8,14 @@ import "swiper/css"
 import "swiper/css/navigation"
 
 import { Navigation } from "swiper/modules"
-import { FaMapMarkedAlt, FaShare } from "react-icons/fa"
+import {
+  FaBed,
+  FaMapMarkedAlt,
+  FaShare,
+  FaBath,
+  FaParking,
+  FaChair,
+} from "react-icons/fa"
 
 export default function Listing() {
   // get the listing id using the useParams hook
@@ -18,7 +25,7 @@ export default function Listing() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
-
+  console.log(listing)
   // fetch the listing data
   useEffect(() => {
     // fetch the listing data
@@ -122,6 +129,32 @@ export default function Listing() {
                 </p>
               )}
             </div>
+            <p className="text-slate-800 text-justify">
+              <span className="font-semibold text-black">Description - </span>{" "}
+              {listing.description}
+            </p>
+            <ul className=" flex flex-wrap items-center text-green-900 font-semibold text-sm gap-4  sm:gap-6">
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaBed className="text-lg text-green-700" />
+                {listing.bedrooms > 1
+                  ? `${listing.bedrooms} Beds`
+                  : `${listing.bedrooms} Bed`}
+              </li>
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaBath className="text-lg text-green-700" />
+                {listing.bathrooms > 1
+                  ? `${listing.bathrooms} Baths`
+                  : `${listing.bathrooms} Bath`}
+              </li>
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaParking className="text-lg text-green-700" />
+                {listing.parking ? `Parking Available` : `No Parking`}
+              </li>
+              <li className="flex items-center gap-1 whitespace-nowrap ">
+                <FaChair className="text-lg text-green-700" />
+                {listing.furnished ? `Furnished` : `Unfurnished`}
+              </li>
+            </ul>
           </div>
         </div>
       )}
