@@ -3,11 +3,6 @@ import bcryptjs from "bcryptjs"
 import createError from "../utils/error.js"
 import Listing from "../models/Listing.model.js"
 
-//get user
-export const getUser = (req, res) => {
-  res.send("Hello World from user controller")
-}
-
 //update user
 export const updateUser = async (req, res, next) => {
   //verify user is updating their own account
@@ -75,6 +70,21 @@ export const getUserListing = async (req, res, next) => {
       createdAt: -1,
     })
     res.status(200).json(listing)
+  } catch (error) {
+    next(error)
+  }
+}
+
+// get user
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (!user) return next(createError(404, "User not found"))
+
+    const { password: pass, ...rest } = user._doc
+
+    res.status(200).json(rest)
   } catch (error) {
     next(error)
   }
